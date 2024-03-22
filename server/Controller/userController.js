@@ -46,15 +46,16 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new Error("Email does not exist");
     }
 
-    if(userExist.matchPassword(password)){
+    if(await userExist.matchPassword(password)){
         res.status(200).json({
             _id:userExist._id,
             name:userExist.name,
             email:userExist.email,
             token: await generateToken(userExist._id)
-        })
-
-        
+        })  
+    }
+    else{
+        res.status(404).json({message:'wrong credentials'})
     }
 });
 

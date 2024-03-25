@@ -23,6 +23,7 @@ const registerUser=asyncHandler(async(req,res)=>{
             name:user.name,
             email:user.email,
             password:user.password,
+            pic:user.pic,
             token: await generateToken(user._id)
         })
     }
@@ -51,6 +52,7 @@ const loginUser = asyncHandler(async (req, res) => {
             _id:userExist._id,
             name:userExist.name,
             email:userExist.email,
+            pic:userExist.pic,
             token: await generateToken(userExist._id)
         })  
     }
@@ -59,4 +61,16 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports={registerUser,loginUser}
+const getUser=async(req,res)=>{
+    console.log(req.user);
+   const keyword=req.query.search?{
+    $or:[
+        {email:{$regex:req.query.search,$options:"i"}},
+        {name:{$regex:req.query.search,$options:"i"}}
+    ]
+   }:{};
+   const users=await User.find(keyword).find({_id:{$ne:req.user._id}})
+   res.status(200).json(users);
+}
+
+module.exports={registerUser,loginUser,getUser}

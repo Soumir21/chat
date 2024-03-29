@@ -47,6 +47,7 @@ const accessChat=expressAsyncHandler(async(req,res)=>{
 
 const fetchChat=expressAsyncHandler(async(req,res)=>{
     try{
+        console.log(req.user);
         const result=await Chat.find({users:{$elemMatch:{$eq:req.user._id}}})
         .populate("users","-password")
         .populate("groupAdmin","-password")
@@ -57,11 +58,11 @@ const fetchChat=expressAsyncHandler(async(req,res)=>{
             path:"latestMessage.sender",
             select:"name pic email"
         })
-
-        res.status(200).json(result);
+        console.log(final);
+        res.status(200).json(final);
         
     }catch(err){
-
+        console.log(err);
     }
 })
 

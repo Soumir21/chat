@@ -5,6 +5,7 @@ const cors=require("cors")
 const dbConnect=require("./config/db")
 const userRouter=require("./Routes/userRoute")
 const chatRouter=require("./Routes/chatRouter")
+const messageRouter=require("./Routes/messageRoute")
 const { notFound, errorHandler } = require("./middleware/errorMiddleware")
 require('dotenv').config();
 app.use(cors())
@@ -14,6 +15,8 @@ app.use(express.json())
 app.get("/",(req,res)=>res.send("Api start"))
 app.use("/api/user",userRouter)
 app.use("/api/chat",chatRouter)
+app.use("/api/message",messageRouter)
+
 app.use(notFound);
 app.use(errorHandler)
 app.listen(process.env.PORT,console.log("serrver started"));

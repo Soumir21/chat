@@ -2,7 +2,7 @@ const mongoose=require("mongoose");
 
 const messageSchema=new mongoose.Schema({
     sender:{
-        type:mongoose.Schema.Types.objectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
     content:{
@@ -10,7 +10,7 @@ const messageSchema=new mongoose.Schema({
         trim:true
     },
     chat:{
-        type:mongoose.Schema.Types.objectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"Chat"
     }
 },

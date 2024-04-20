@@ -1,5 +1,5 @@
 const express=require("express")
-const chats=require("./Data/Data")
+// const chats=require("./Data/Data")
 const app=express()
 const cors=require("cors")
 const dbConnect=require("./config/db")

@@ -16,7 +16,6 @@ const userSchema=new mongoose.Schema({
     },
     pic:{
         type: String,
-    
         default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
     }
 },
@@ -25,9 +24,7 @@ const userSchema=new mongoose.Schema({
 })
 
 userSchema.methods.matchPassword = async function(enteredPassword) {
-    console.log(`${enteredPassword} and ${this.password}`)
     const isVerify = await bcrypt.compare(enteredPassword, this.password);
-    console.log(isVerify);
     return(isVerify)
 };
 

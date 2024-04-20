@@ -12,7 +12,7 @@ const registerUser=asyncHandler(async(req,res)=>{
 
     const userExist=await User.findOne({email:email});
     if(userExist){
-         res.status(400)
+        res.status(400)
         throw new Error("Email already exists")
     }
 
@@ -62,7 +62,6 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getUser=async(req,res)=>{
- 
    const keyword=req.query.search?{
     $or:[
         {email:{$regex:req.query.search,$options:"i"}},

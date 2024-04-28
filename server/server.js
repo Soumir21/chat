@@ -12,7 +12,6 @@ app.use(cors())
 dbConnect(process.env.MONGO_SERVER);
 
 app.use(express.json())
-app.get("/",(req,res)=>res.send("Api start"))
 app.use("/api/user",userRouter)
 app.use("/api/chat",chatRouter)
 app.use("/api/message",messageRouter)

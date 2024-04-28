@@ -51,15 +51,24 @@ const fetchChat=expressAsyncHandler(async(req,res)=>{
         const result=await Chat.find({users:{$elemMatch:{$eq:req.user._id}}})
         .populate("users","-password")
         .populate("groupAdmin","-password")
-        .populate("latestMessage")
+        .populate(
+            {path:"latestMessage",
+             populate:{
+                path:"sender",
+               select:"name pic email"
+             } })
         .sort({updatedAt:-1});
 
-        const final=await User.populate(result,{
-            path:"latestMessage.sender",
-            select:"name pic email"
-        })
+        // const final=await User.populate(result,{
+        //     path:"latestMessage.sender",
+        //     select:"name pic email"
+        // })
         
-        res.status(200).json(final);
+        // const final=await result.populate(result,{
+        //     path:"latestMessage.sender",
+        //     select:"name pic email"
+        // })
+        res.status(200).json(result);
         
     }catch(err){
         console.log(err);
@@ -104,7 +113,7 @@ const renameGroup=expressAsyncHandler(async(req,res)=>{
     const updatedGroup= await Chat.findByIdAndUpdate(
         chatId,
         {
-            chatName,
+            $set:{chatName:chatName},
         },
         {
             new:true

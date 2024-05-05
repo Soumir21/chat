@@ -72,4 +72,28 @@ const getUser=async(req,res)=>{
    res.status(200).json(users);
 }
 
-module.exports={registerUser,loginUser,getUser}
+const changePicture=async(req,res)=>{
+    const {profilePic}=req.body;
+    console.log(req.body)
+   
+   
+    try{
+        const userExist= await User.findByIdAndUpdate(req.user._id,{$set:{pic:profilePic}},{new:true});
+        res.status(200).json({
+            _id:userExist._id,
+            name:userExist.name,
+            email:userExist.email,
+            pic:userExist.pic,
+            token: await generateToken(userExist._id)
+        })
+    }catch(err){
+        console.log(err)
+    } 
+}
+module.exports={registerUser,loginUser,getUser,changePicture}
+ // try{
+    //     const result=await User.findById(req.user._id);
+    //     res.status(200).json(result)
+    // }catch(err){
+    //     console.log(err)
+    // }

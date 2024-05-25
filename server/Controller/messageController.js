@@ -48,4 +48,14 @@ const allMessagesController=asyncHandler(async(req,res)=>{
         throw new Error(err);
     }
 })
-module.exports={sendMessageController,allMessagesController}
+
+const deleteMessageController=asyncHandler(async(req,res)=>{
+    try{
+        await Message.findByIdAndDelete(req.body.id);
+        res.status(200).json({msg:"deleted successfully"})
+    }catch(err){
+        res.status(400)
+        throw new Error(err);
+    }
+})
+module.exports={sendMessageController,allMessagesController,deleteMessageController}
